@@ -3,11 +3,11 @@ let getRandomInteger = function(min, max) {
   max = Math.floor(max);
 
   if (max < min) {
-    console.log('Нарушен порядок ввода значений "от" и "до"');
+    alert('Нарушен порядок ввода значений "от" и "до"');
   }
 
   else if (max === min) {
-    console.log(`Диапазон значений должен варьироваться минимум на единицу`);
+    alert(`Диапазон значений должен варьироваться минимум на единицу`);
   }
 
   else {
@@ -19,11 +19,11 @@ let getRandomInteger = function(min, max) {
 let getRandomNumber = function(min, max) {
 
   if (max < min) {
-    console.log('Нарушен порядок ввода значений "от" и "до"');
+    alert('Нарушен порядок ввода значений "от" и "до"');
   }
 
   else if (max === min) {
-    console.log('Значение "до" должно превышать значение "от"');
+    alert('Значение "до" должно превышать значение "от"');
   }
 
   else {

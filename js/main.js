@@ -7,7 +7,7 @@ let getRandomInteger = function(min, max) {
   }
 
   else if (max === min) {
-    alert(`Диапазон значений должен варьироваться минимум на единицу`);
+    alert('Диапазон значений должен варьироваться минимум на единицу');
   }
 
   else {
@@ -15,6 +15,9 @@ let getRandomInteger = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 };
+
+getRandomInteger(10, 20);
+
 
 let getRandomNumber = function(min, max) {
 
@@ -31,3 +34,5 @@ let getRandomNumber = function(min, max) {
     return Math.random() * (max - min + 1) + min;
   }
 };
+
+getRandomNumber(3, 100);

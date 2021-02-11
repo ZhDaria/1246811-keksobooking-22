@@ -10,6 +10,10 @@ let getRandomInteger = function(min, max) {
     alert('Диапазон значений должен варьироваться минимум на единицу');
   }
 
+  else if (min < 0 || max <= 0) {
+    alert('Диапазон значений должен быть только положительным');
+  }
+
   else {
 
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -27,6 +31,10 @@ let getRandomNumber = function(min, max) {
 
   else if (max === min) {
     alert('Значение "до" должно превышать значение "от"');
+  }
+
+  else if (min < 0 || max <= 0) {
+    alert('Диапазон значений должен быть только положительным');
   }
 
   else {

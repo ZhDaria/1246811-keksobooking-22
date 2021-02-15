@@ -15,7 +15,6 @@ let getRandomInteger = function(min, max) {
   }
 
   else {
-
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 };
@@ -23,7 +22,7 @@ let getRandomInteger = function(min, max) {
 getRandomInteger(10, 20);
 
 
-let getRandomNumber = function(min, max) {
+let getRandomNumber = function(min, max, digitsCount) {
 
   if (max < min) {
     alert('Нарушен порядок ввода значений "от" и "до"');
@@ -37,10 +36,13 @@ let getRandomNumber = function(min, max) {
     alert('Диапазон значений должен быть только положительным');
   }
 
-  else {
+  else if (typeof digitsCount == 'undefined') {
+    alert('Не указано количество знаков после запятой')
+  }
 
-    return Math.random() * (max - min + 1) + min;
+  else {
+    return (Math.random() * (max - min + 1) + min).toFixed(digitsCount);
   }
 };
 
-getRandomNumber(3, 100);
+getRandomNumber(3, 100, 5);

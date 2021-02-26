@@ -9,12 +9,12 @@ const FEATURES = [
   'conditioner',
 ]
 
-const TYPE = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-]
+const TYPE = {
+  'palace': 'Дворец',
+  'flat': 'Квартира',
+  'house': 'Дом',
+  'bungalow': 'Бунгало',
+}
 
 const CHECKIN = [
   '12:00',
@@ -60,7 +60,7 @@ const createAdvert = function () {
       title: 'Сдается квартира в аренду',
       address: '35.65000, 139.70000',
       price: getRandomNumber(1, 10000, 2),
-      type: TYPE[getRandomInteger(0, 3)],
+      type: Object.entries(TYPE)[getRandomInteger(0, 3)],
       rooms: getRandomInteger(1, 10),
       guests: getRandomInteger(1, 100),
       checkin: CHECKIN[getRandomInteger(0, 2)],

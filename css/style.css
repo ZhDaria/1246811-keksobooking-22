@@ -860,6 +860,7 @@ fieldset {
 .popup__feature {
   display: inline-block;
   overflow: hidden;
+  display: none;
 
   width: 30px;
   height: 28px;
@@ -870,6 +871,10 @@ fieldset {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 25px 345px;
+}
+
+.popup__feature--show {
+  display: inline-block;
 }
 
 .popup__feature--wifi {

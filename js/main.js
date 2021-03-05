@@ -1,3 +1,3 @@
 import './data.js';
-import './similar-list.js';
+import './map.js';
 

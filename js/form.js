@@ -73,33 +73,37 @@ userCapacity.options[3].disabled = true;
 
 
 userRoomNumber.addEventListener('change', () => {
-  if (userRoomNumber.value === '1') {
-    userCapacity.options[0].disabled = true;
-    userCapacity.options[1].disabled = true;
-    userCapacity.options[2].disabled = false;
-    userCapacity.options[3].disabled = true;
 
-  }
-  else if (userRoomNumber.value === '2') {
-    userCapacity.options[0].disabled = true;
-    userCapacity.options[1].disabled = false;
-    userCapacity.options[2].disabled = false;
-    userCapacity.options[3].disabled = true;
+  Array.from(userCapacity.options).forEach((option) => {
+    option.disabled = true;
+  })
 
-  }
-  else if (userRoomNumber.value === '3') {
-    userCapacity.options[0].disabled = false;
-    userCapacity.options[1].disabled = false;
-    userCapacity.options[2].disabled = false;
-    userCapacity.options[3].disabled = true;
-  }
-  else if (userRoomNumber.value === '100') {
-    userCapacity.options[0].disabled = true;
-    userCapacity.options[1].disabled = true;
-    userCapacity.options[2].disabled = true;
-    userCapacity.options[3].disabled = false;
+  switch(userRoomNumber.value) {
+    case '1':
+      userCapacity.options[2].disabled = false;
+      userCapacity.options[2].selected = true;
+      break;
+
+    case '2':
+      userCapacity.options[1].disabled = false;
+      userCapacity.options[1].selected = true;
+      userCapacity.options[2].disabled = false;
+      break;
+
+    case '3':
+      userCapacity.options[0].disabled = false;
+      userCapacity.options[0].selected = true;
+      userCapacity.options[1].disabled = false;
+      userCapacity.options[2].disabled = false;
+      break;
+
+    case '100':
+      userCapacity.options[3].disabled = false;
+      userCapacity.options[3].selected = true;
+      break;
   }
 })
+
 
 
 

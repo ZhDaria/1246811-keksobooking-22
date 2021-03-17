@@ -1,5 +1,5 @@
-import { adverts } from './data.js';
 import { createAdvertPopup } from './similar-list.js';
+import { showAlert } from './util.js';
 
 /* global L:readonly */
 
@@ -31,7 +31,7 @@ const map = L.map('map-canvas')
       element.disabled = false;
     });
   })
-  .setView({lat: 35.6895, lng: 139.69171}, 12);
+  .setView({lat: 35.6895, lng: 139.69171}, 8.4);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -62,23 +62,29 @@ mainMarker.on('moveend', (evt) => {
   address.value = `${cors.lat.toFixed(5)}, ${cors.lng.toFixed(5)}`;
 })
 
-adverts.forEach((advert) => {
-  const icon = L.icon({
-    iconUrl: '/img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+fetch('https://22.javascript.pages.academy/keksobooking/data')
+  .then((response) => response.json())
+  .then((adverts) => {
+    adverts.forEach((advert) => {
 
-  const marker = L.marker({
-    lat: advert.location.x,
-    lng: advert.location.y,
-  }, {icon});
+      const icon = L.icon({
+        iconUrl: '/img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
 
-  marker.addTo(map).bindPopup(createAdvertPopup(advert),{
-    keepInView: true,
-  },
-  );
-});
+      const marker = L.marker({
+        lat: advert.location.lat,
+        lng: advert.location.lng,
+      }, {icon});
 
+      marker.addTo(map).bindPopup(createAdvertPopup(advert),{keepInView: true},
+      );
+    });
+  })
+  .catch(() => {
+    showAlert('Не удалось загрузить похожие объявления. Попробуйте обновить страницу');
+  })
 
+export { mainMarker, address }
 

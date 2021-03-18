@@ -43,4 +43,38 @@ const getRandomNumber = function(min, max, digitsCount) {
   }
 };
 
-export { getRandomInteger, getRandomNumber }
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '26px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+};
+
+
+const onEscDown = (element) => {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      element.lastChild.remove();
+    }
+  });
+}
+
+const onClick = (element) => {
+  document.addEventListener('click', () => {
+    element.lastChild.remove();
+  })
+}
+
+
+export { getRandomInteger, getRandomNumber, showAlert, onEscDown, onClick }

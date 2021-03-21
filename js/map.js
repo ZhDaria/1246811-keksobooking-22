@@ -1,5 +1,5 @@
-import { createAdvertPopup } from './similar-list.js';
-import { showAlert } from './util.js';
+import { adverts } from './data.js';
+import { renderSimilarAdvert } from './similar-advert.js';
 
 /* global L:readonly */
 
@@ -22,13 +22,18 @@ address.value = '35.6895, 139.69171';
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    adForm.classList.remove('ad-form--disabled');
-    adForm.querySelectorAll('fieldset').forEach((element) => {
-      element.disabled = false
-    });
+    adverts.then((all) => {
+      renderSimilarAdvert(all);
+    })
+
     mapFilters.classList.remove('map__filters--disabled');
     mapFilters.querySelectorAll('fieldset, select').forEach((element) => {
       element.disabled = false;
+    });
+
+    adForm.classList.remove('ad-form--disabled');
+    adForm.querySelectorAll('fieldset').forEach((element) => {
+      element.disabled = false
     });
   })
   .setView({lat: 35.6895, lng: 139.69171}, 8.4);
@@ -62,29 +67,5 @@ mainMarker.on('moveend', (evt) => {
   address.value = `${cors.lat.toFixed(5)}, ${cors.lng.toFixed(5)}`;
 })
 
-fetch('https://22.javascript.pages.academy/keksobooking/data')
-  .then((response) => response.json())
-  .then((adverts) => {
-    adverts.forEach((advert) => {
-
-      const icon = L.icon({
-        iconUrl: '/img/pin.svg',
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-      });
-
-      const marker = L.marker({
-        lat: advert.location.lat,
-        lng: advert.location.lng,
-      }, {icon});
-
-      marker.addTo(map).bindPopup(createAdvertPopup(advert),{keepInView: true},
-      );
-    });
-  })
-  .catch(() => {
-    showAlert('Не удалось загрузить похожие объявления. Попробуйте обновить страницу');
-  })
-
-export { mainMarker, address }
+export { mainMarker, address, map }
 

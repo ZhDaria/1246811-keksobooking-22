@@ -3,21 +3,21 @@ import { renderSimilarAdvert } from './similar-advert.js';
 
 /* global L:readonly */
 
-const adForm = document.querySelector('.ad-form');
-adForm.classList.add('ad-form--disabled');
-
-adForm.querySelectorAll('fieldset').forEach((element) => {
-  element.disabled = true;
-});
-
-const mapFilters = document.querySelector('.map__filters');
-mapFilters.classList.add('map__filters--disabled');
-
-mapFilters.querySelectorAll('fieldset, select').forEach((element) => {
-  element.disabled = true;
-});
-
+const AD_FORM = document.querySelector('.ad-form');
+const MAP_FILTERS = document.querySelector('.map__filters');
 const address = document.querySelector('#address');
+
+AD_FORM.classList.add('ad-form--disabled');
+AD_FORM.querySelectorAll('fieldset').forEach((element) => {
+  element.disabled = true;
+});
+
+MAP_FILTERS.classList.add('map__filters--disabled');
+MAP_FILTERS.querySelectorAll('fieldset, select').forEach((element) => {
+  element.disabled = true;
+});
+
+
 address.value = '35.6895, 139.69171';
 
 const map = L.map('map-canvas')
@@ -26,13 +26,13 @@ const map = L.map('map-canvas')
       renderSimilarAdvert(all);
     })
 
-    mapFilters.classList.remove('map__filters--disabled');
-    mapFilters.querySelectorAll('fieldset, select').forEach((element) => {
+    MAP_FILTERS.classList.remove('map__filters--disabled');
+    MAP_FILTERS.querySelectorAll('fieldset, select').forEach((element) => {
       element.disabled = false;
     });
 
-    adForm.classList.remove('ad-form--disabled');
-    adForm.querySelectorAll('fieldset').forEach((element) => {
+    AD_FORM.classList.remove('ad-form--disabled');
+    AD_FORM.querySelectorAll('fieldset').forEach((element) => {
       element.disabled = false
     });
   })
@@ -45,8 +45,8 @@ L.tileLayer(
   },
 ).addTo(map);
 
-const mainIcon = L.icon({
-  iconUrl: '/img/main-pin.svg',
+const MAIN_ICON = L.icon({
+  iconUrl: 'img/main-pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 
@@ -56,7 +56,7 @@ const mainMarker = L.marker (
   {lat: 35.6895, lng: 139.69171},
   {
     draggable: true,
-    icon: mainIcon,
+    icon: MAIN_ICON,
   },
 );
 

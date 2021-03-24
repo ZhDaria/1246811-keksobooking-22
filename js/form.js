@@ -1,123 +1,125 @@
 import { mainMarker, address } from './map.js';
 import { onEscDown, onClick } from './util.js';
 
-const userForm = document.querySelector('.ad-form');
-const typeOfHouse = userForm.querySelector('#type');
-const price = userForm.querySelector('#price');
-const checkIn = userForm.querySelector('#timein');
-const checkOut = userForm.querySelector('#timeout');
-const userTitle = userForm.querySelector('#title');
-const userPrice = userForm.querySelector('#price');
-const userRoomNumber = userForm.querySelector('#room_number');
-const userCapacity = userForm.querySelector('#capacity');
+const USER_FORM = document.querySelector('.ad-form');
+const TYPE_OF_HOUSE = USER_FORM.querySelector('#type');
+const PRICE = USER_FORM.querySelector('#price');
+const CHECK_IN = USER_FORM.querySelector('#timein');
+const CHECK_OUT = USER_FORM.querySelector('#timeout');
+const USER_TITLE = USER_FORM.querySelector('#title');
+const USER_PRICE = USER_FORM.querySelector('#price');
+const USER_ROOM_NUMBER = USER_FORM.querySelector('#room_number');
+const USER_CAPACITY = USER_FORM.querySelector('#capacity');
 
-const successMessage = document.querySelector('#success').content;
-const errorMessage = document.querySelector('#error').content;
+const SUCCESS_MESSAGE = document.querySelector('#success').content;
+const ERROR_MESSAGE = document.querySelector('#error').content;
 
-const main = document.querySelector('main');
+const MAIN = document.querySelector('main');
 
-const errorButton = document.querySelector ('.error__button');
-const resetButton = document.querySelector('.ad-form__reset');
+const ERROR_BUTTON = document.querySelector ('.error__button');
+const RESET_BUTTON = document.querySelector('.ad-form__reset');
 
 
-typeOfHouse.addEventListener('change', function () {
-  if (this.value === 'bungalow') {
-    price.placeholder = '0';
-    price.min = 0;
-  }
+TYPE_OF_HOUSE.addEventListener('change', () => {
+  switch(TYPE_OF_HOUSE.value) {
+    case 'bungalow':
+      PRICE.placeholder = '0';
+      PRICE.min = 0;
+      break;
 
-  else if (this.value === 'flat') {
-    price.placeholder = '1000';
-    price.min = 1000;
-  }
+    case 'flat':
+      PRICE.placeholder = '1000';
+      PRICE.min = 1000;
+      break;
 
-  else if (this.value === 'house') {
-    price.placeholder = '5000';
-    price.min = 5000;
-  }
+    case 'house':
+      PRICE.placeholder = '5000';
+      PRICE.min = 5000;
+      break;
 
-  else if (this.value === 'palace') {
-    price.placeholder = '10000';
-    price.min = 10000;
+    case 'palace':
+      PRICE.placeholder = '10000';
+      PRICE.min = 10000;
+      break;
   }
 });
 
-checkIn.addEventListener('change', function () {
-  checkOut.value = this.value;
+CHECK_IN.addEventListener('change',  () => {
+  CHECK_OUT.value = this.value;
 });
 
-checkOut.addEventListener('change', function () {
-  checkIn.value = this.value;
+CHECK_OUT.addEventListener('change',  () => {
+  CHECK_IN.value = this.value;
 });
 
-userTitle.addEventListener('invalid', () => {
-  if (userTitle.validity.tooShort) {
-    userTitle.setCustomValidity('Заголовок должен содержать не менее 30 символов');
+USER_TITLE.addEventListener('invalid', () => {
+  if (USER_TITLE.validity.tooShort) {
+    USER_TITLE.setCustomValidity('Заголовок должен содержать не менее 30 символов');
   }
-  else if (userTitle.validity.tooLong) {
-    userTitle.setCustomValidity('Заголовок должен содержать не более 100 символов');
+  else if (USER_TITLE.validity.tooLong) {
+    USER_TITLE.setCustomValidity('Заголовок должен содержать не более 100 символов');
   }
-  else if (userTitle.validity.valueMissing) {
-    userTitle.setCustomValidity('Обязательное поле');
+  else if (USER_TITLE.validity.valueMissing) {
+    USER_TITLE.setCustomValidity('Обязательное поле');
   } else {
-    userTitle.setCustomValidity('');
+    USER_TITLE.setCustomValidity('');
   }
 });
 
-userPrice.addEventListener('invalid', () => {
-  const priceValue = userPrice.value;
+USER_PRICE.addEventListener('invalid', () => {
+  const priceValue = USER_PRICE.value;
   if (priceValue > 1000000) {
-    userPrice.setCustomValidity('Цена не может превышать 1 000 000 руб.')
+    USER_PRICE.setCustomValidity('Цена не может превышать 1 000 000 руб.')
   }
-  else if (userPrice.validity.valueMissing) {
-    userPrice.setCustomValidity('Обязательное поле');
+  else if (USER_PRICE.validity.valueMissing) {
+    USER_PRICE.setCustomValidity('Обязательное поле');
   }
   else {
-    userPrice.setCustomValidity('');
+    USER_PRICE.setCustomValidity('');
   }
 });
 
 
 
-userCapacity.options[0].disabled = true;
-userCapacity.options[1].disabled = true;
-userCapacity.options[2].disabled = false;
-userCapacity.options[3].disabled = true;
+USER_CAPACITY.options[0].disabled = true;
+USER_CAPACITY.options[1].disabled = true;
+USER_CAPACITY.options[2].disabled = false;
+USER_CAPACITY.options[3].disabled = true;
 
 
-userRoomNumber.addEventListener('change', () => {
+USER_ROOM_NUMBER.addEventListener('change', () => {
 
-  Array.from(userCapacity.options).forEach((option) => {
+  Array.from(USER_CAPACITY.options).forEach((option) => {
     option.disabled = true;
   })
 
-  switch(userRoomNumber.value) {
+  switch(USER_ROOM_NUMBER.value) {
     case '1':
-      userCapacity.options[2].disabled = false;
-      userCapacity.options[2].selected = true;
+      USER_CAPACITY.options[2].disabled = false;
+      USER_CAPACITY.options[2].selected = true;
       break;
 
     case '2':
-      userCapacity.options[1].disabled = false;
-      userCapacity.options[1].selected = true;
-      userCapacity.options[2].disabled = false;
+      USER_CAPACITY.options[1].disabled = false;
+      USER_CAPACITY.options[1].selected = true;
+      USER_CAPACITY.options[2].disabled = false;
       break;
 
     case '3':
-      userCapacity.options[0].disabled = false;
-      userCapacity.options[0].selected = true;
-      userCapacity.options[1].disabled = false;
-      userCapacity.options[2].disabled = false;
+      USER_CAPACITY.options[0].disabled = false;
+      USER_CAPACITY.options[0].selected = true;
+      USER_CAPACITY.options[1].disabled = false;
+      USER_CAPACITY.options[2].disabled = false;
       break;
 
     case '100':
-      userCapacity.options[3].disabled = false;
-      userCapacity.options[3].selected = true;
+      USER_CAPACITY.options[3].disabled = false;
+      USER_CAPACITY.options[3].selected = true;
       break;
   }
 })
 
-userForm.addEventListener('submit', (evt) => {
+USER_FORM.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   fetch ('https://22.javascript.pages.academy/keksobooking',
@@ -127,33 +129,33 @@ userForm.addEventListener('submit', (evt) => {
     })
     .then((response) => {
       if (response.ok) {
-        userForm.reset();
+        USER_FORM.reset();
         mainMarker.setLatLng({lat: 35.6895, lng: 139.69171});
         address.value = '35.6895, 139.69171';
 
-        main.appendChild(successMessage);
-        onEscDown (main);
-        onClick (main);
+        MAIN.appendChild(SUCCESS_MESSAGE);
+        onEscDown (MAIN);
+        onClick (MAIN);
 
       } else {
-        main.appendChild(errorMessage);
-        onEscDown (main);
-        onClick (main);
+        MAIN.appendChild(ERROR_MESSAGE);
+        onEscDown (MAIN);
+        onClick (MAIN);
       }
 
     })
     .catch(() => {
-      main.appendChild(errorMessage);
-      onEscDown (main);
-      onClick (main);
-      errorButton.addEventListener('click', () => {
-        main.lastChild.remove();
+      MAIN.appendChild(ERROR_MESSAGE);
+      onEscDown (MAIN);
+      onClick (MAIN);
+      ERROR_BUTTON.addEventListener('click', () => {
+        MAIN.lastChild.remove();
       })
     });
 });
 
-resetButton.addEventListener('click', (evt) => {
-  userForm.reset();
+RESET_BUTTON.addEventListener('click', (evt) => {
+  USER_FORM.reset();
   evt.preventDefault();
   mainMarker.setLatLng({lat: 35.6895, lng: 139.69171});
   address.value = '35.6895, 139.69171';

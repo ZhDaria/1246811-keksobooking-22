@@ -26,9 +26,7 @@ adverts.then((allAdverts) => {
             break;
 
           default:
-            if (advert.offer.type === HOUSING_TYPE.value) {
-              filterCount++;
-            }
+            if (advert.offer.type === HOUSING_TYPE.value) filterCount++;
         }
 
         switch(HOUSING_PRICE.value) {
@@ -37,21 +35,15 @@ adverts.then((allAdverts) => {
             break;
 
           case 'low':
-            if (advert.offer.price < LOWEST_PRICE) {
-              filterCount++;
-            }
+            if (advert.offer.price < LOWEST_PRICE) filterCount++;
             break;
 
           case 'middle':
-            if (advert.offer.price < HIGHEST_PRICE && advert.offer.price >= LOWEST_PRICE) {
-              filterCount++;
-            }
+            if (advert.offer.price < HIGHEST_PRICE && advert.offer.price >= LOWEST_PRICE) filterCount++;
             break
 
           case 'high':
-            if (advert.offer.price >= HIGHEST_PRICE) {
-              filterCount++;
-            }
+            if (advert.offer.price >= HIGHEST_PRICE) filterCount++;
         }
 
         switch(HOUSING_ROOMS.value) {
@@ -59,19 +51,13 @@ adverts.then((allAdverts) => {
             filterCount++;
             break;
           case '1':
-            if (advert.offer.rooms === 1) {
-              filterCount++;
-            }
+            if (advert.offer.rooms === 1) filterCount++;
             break;
           case '2':
-            if (advert.offer.rooms === 2) {
-              filterCount++;
-            }
+            if (advert.offer.rooms === 2) filterCount++;
             break;
           case '3':
-            if (advert.offer.rooms === 3) {
-              filterCount++;
-            }
+            if (advert.offer.rooms === 3) filterCount++;
             break;
         }
 
@@ -80,19 +66,13 @@ adverts.then((allAdverts) => {
             filterCount++;
             break;
           case '0':
-            if(advert.offer.guests === 0) {
-              filterCount++;
-            }
+            if(advert.offer.guests === 0) filterCount++;
             break;
           case '1':
-            if( advert.offer.guests === 1) {
-              filterCount++;
-            }
+            if( advert.offer.guests === 1) filterCount++;
             break;
           case '2':
-            if(advert.offer.guests === 2) {
-              filterCount++;
-            }
+            if(advert.offer.guests === 2) filterCount++;
             break;
         }
 

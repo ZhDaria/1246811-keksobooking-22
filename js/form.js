@@ -1,5 +1,5 @@
 import { mainMarker, address } from './map.js';
-import { onEscDown, onClick } from './util.js';
+import { isEscEvent } from './util.js';
 
 const USER_FORM = document.querySelector('.ad-form');
 const TYPE_OF_HOUSE = USER_FORM.querySelector('#type');
@@ -16,11 +16,27 @@ const ERROR_MESSAGE = document.querySelector('#error').content;
 
 const MAIN = document.querySelector('main');
 
-const ERROR_BUTTON = document.querySelector ('.error__button');
 const RESET_BUTTON = document.querySelector('.ad-form__reset');
 
+const MAX_PRICE = 1000000;
 
-TYPE_OF_HOUSE.addEventListener('change', () => {
+const onResetForm = (evt) => {
+  USER_FORM.reset();
+  evt.preventDefault();
+  mainMarker.setLatLng({lat: 35.6895, lng: 139.69171});
+  address.value = '35.6895, 139.69171';
+}
+const onPopupShow = (evt) => {
+  if ((evt.constructor.name === 'KeyboardEvent' && isEscEvent(evt)) ||
+    evt.constructor.name === 'MouseEvent') {
+    MAIN.lastChild.remove();
+
+    document.removeEventListener('keydown', onPopupShow);
+    document.removeEventListener('click', onPopupShow);
+  }
+}
+
+const onChangeTypeHouse = () => {
   switch(TYPE_OF_HOUSE.value) {
     case 'bungalow':
       PRICE.placeholder = '0';
@@ -42,7 +58,9 @@ TYPE_OF_HOUSE.addEventListener('change', () => {
       PRICE.min = 10000;
       break;
   }
-});
+}
+
+TYPE_OF_HOUSE.addEventListener('change', onChangeTypeHouse);
 
 CHECK_IN.addEventListener('change',  () => {
   CHECK_OUT.value = this.value;
@@ -68,7 +86,7 @@ USER_TITLE.addEventListener('invalid', () => {
 
 USER_PRICE.addEventListener('invalid', () => {
   const priceValue = USER_PRICE.value;
-  if (priceValue > 1000000) {
+  if (priceValue > MAX_PRICE) {
     USER_PRICE.setCustomValidity('Цена не может превышать 1 000 000 руб.')
   }
   else if (USER_PRICE.validity.valueMissing) {
@@ -128,38 +146,24 @@ USER_FORM.addEventListener('submit', (evt) => {
       body: formData,
     })
     .then((response) => {
+
       if (response.ok) {
-        USER_FORM.reset();
-        mainMarker.setLatLng({lat: 35.6895, lng: 139.69171});
-        address.value = '35.6895, 139.69171';
-
+        RESET_BUTTON.dispatchEvent(new Event('click'));
         MAIN.appendChild(SUCCESS_MESSAGE);
-        onEscDown (MAIN);
-        onClick (MAIN);
-
       } else {
-        MAIN.appendChild(ERROR_MESSAGE);
-        onEscDown (MAIN);
-        onClick (MAIN);
+        throw new Error('Ответ от сервера получен, но в нём ошибка!');
       }
-
     })
     .catch(() => {
       MAIN.appendChild(ERROR_MESSAGE);
-      onEscDown (MAIN);
-      onClick (MAIN);
-      ERROR_BUTTON.addEventListener('click', () => {
-        MAIN.lastChild.remove();
-      })
+    })
+    .then(() => {
+      document.addEventListener('keydown', onPopupShow);
+      document.addEventListener('click', onPopupShow);
     });
 });
 
-RESET_BUTTON.addEventListener('click', (evt) => {
-  USER_FORM.reset();
-  evt.preventDefault();
-  mainMarker.setLatLng({lat: 35.6895, lng: 139.69171});
-  address.value = '35.6895, 139.69171';
-})
+RESET_BUTTON.addEventListener('click', onResetForm);
 
 
 

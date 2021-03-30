@@ -16,19 +16,8 @@ const showAlert = (message) => {
 
 };
 
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
 
-const onEscDown = (element) => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-      element.lastChild.remove();
-    }
-  });
-}
-
-const onClick = (element) => {
-  document.addEventListener('click', () => {
-    element.lastChild.remove();
-  })
-}
-
-export { showAlert, onEscDown, onClick }
+export { showAlert, isEscEvent }

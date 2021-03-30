@@ -6,6 +6,7 @@ const createAdvertPopup = (advert) => {
   const ADVERT_ITEM = SIMILAR_ADVERT_TEMPLATE.cloneNode(true);
   const ADVERT_AVATAR = advert.author;
   const ADVERT_OFFER = advert.offer;
+
   ADVERT_ITEM.querySelector('.popup__avatar').src = ADVERT_AVATAR.avatar;
   ADVERT_ITEM.querySelector('.popup__title').textContent = ADVERT_OFFER.title;
   ADVERT_ITEM.querySelector('.popup__text--address').textContent = ADVERT_OFFER.address;
@@ -19,9 +20,17 @@ const createAdvertPopup = (advert) => {
   ADVERT_ITEM.querySelector('.popup__description').textContent = ADVERT_OFFER.description;
 
   ADVERT_ITEM.querySelector('.popup__photos').innerHTML = '';
+
+  const photoNode = document.createElement('img');
+  photoNode.className = 'popup__photo';
+  photoNode.width = 45;
+  photoNode.height = 40;
+  photoNode.alt = 'Фото жилья';
+
   ADVERT_OFFER.photos.forEach((photo) => {
-    ADVERT_ITEM.querySelector('.popup__photos').innerHTML += '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
-  })
+    photoNode.src = photo;
+    ADVERT_ITEM.querySelector('.popup__photos').appendChild(photoNode);
+  });
 
   SIMILAR_LIST_FRAGMENT.appendChild(ADVERT_ITEM);
 

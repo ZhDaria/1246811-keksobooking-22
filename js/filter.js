@@ -10,7 +10,9 @@ const HOUSING_ROOMS = document.querySelector('#housing-rooms');
 const HOUSING_GUESTS = document.querySelector('#housing-guests');
 const HOUSING_FEATURES = document.querySelectorAll('.map__checkbox');
 const DELAY = 500;
-const FILTER_COUNTER = FILTER_ADVERT_FORM.querySelectorAll('input, select').length;
+const FILTER_COUNTER = FILTER_ADVERT_FORM.querySelectorAll('input, select').length
+const LOWEST_PRICE = 10000;
+const HIGHEST_PRICE = 50000;
 
 adverts.then((allAdverts) => {
   FILTER_ADVERT_FORM.addEventListener('change', _.debounce(
@@ -35,19 +37,19 @@ adverts.then((allAdverts) => {
             break;
 
           case 'low':
-            if (advert.offer.price < 10000) {
+            if (advert.offer.price < LOWEST_PRICE) {
               filterCount++;
             }
             break;
 
           case 'middle':
-            if (advert.offer.price < 50000 && advert.offer.price >= 10000) {
+            if (advert.offer.price < HIGHEST_PRICE && advert.offer.price >= LOWEST_PRICE) {
               filterCount++;
             }
             break
 
           case 'high':
-            if (advert.offer.price >= 50000) {
+            if (advert.offer.price >= HIGHEST_PRICE) {
               filterCount++;
             }
         }
